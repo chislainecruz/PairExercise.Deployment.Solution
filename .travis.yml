@@ -15,6 +15,8 @@ install:
   - npm ci # faster, goes only from package-lock
 before_script:
   - psql -c 'create database "deployment-exercise-test";' -U postgres # remember to change this name if you change it elsewhere (e.g. package.json)
+  script:
+  - NODE_ENV=test mocha {server,client}/**/*.test.js --require @babel/polyfill --require @babel/register
 before_deploy: # omit node_modules, since we set skip_cleanup below
   - rm -rf node_modules
 deploy: # see README for details on these keys
